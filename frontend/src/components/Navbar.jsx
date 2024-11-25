@@ -26,8 +26,8 @@ function Navbar() {
 
   return (
     
-    <header className="bg-white shadow-md">
-    <nav className="container mx-auto px-6 py-4">
+    <header className="bg-white shadow-md sticky top-0 z-50">
+        <nav className="container mx-auto px-6 py-4">
       <div className="flex justify-between items-center">
         <div className="text-2xl font-bold text-orange-500">CommunityGo</div>
         <div className="hidden md:flex space-x-6">

@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import ProtectedRoute from "./components/protectedroutes/privateroutes";
 import Logout from "./components/Logout";
 import RequestDelivery from "./pages/Delivery/RequestDelivery";
+import DeliveryList from "./pages/Delivery/Deliverylist";
 
 function Signin(){
   localStorage.clear()
@@ -37,6 +38,8 @@ function App() {
         <Route path="/" element={<Home />}/>
         <Route path="/logout" element={<Logout />} /> {/* Redirects and clears localStorage */}     
         <Route path="/request-delivery" element={<RequestDelivery />} />
+        <Route path="/deliverylist" element={< DeliveryList />} />
+
          </Routes>
     </BrowserRouter>
   );
