@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom'
 const Login = () => {
 
 
+  
+
   const [email, setEmail ] = useState('')
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -47,6 +49,11 @@ const Login = () => {
       setError('Login faliled.Please check your credentials');
     }
   }
+
+
+
+
+  
 return (
   <div className="flex justify-center items-center min-h-screen bg-gray-100">
     <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -93,7 +100,7 @@ return (
         <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
                 Don't have an account? 
-                <Link to="/signup" className="text-blue-500 hover:underline">Signup</Link>
+                <Link to="/register" className="text-blue-500 hover:underline">Signup</Link>
                 <br />
                 Switch to Admin? 
                 <Link to="/admin/login" className="text-blue-500 hover:underline">Admin-Login</Link>

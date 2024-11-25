@@ -7,14 +7,15 @@ import ProtectedRoute from "./components/protectedroutes/privateroutes";
 import Logout from "./components/Logout";
 import RequestDelivery from "./pages/Delivery/RequestDelivery";
 import DeliveryList from "./pages/Delivery/Deliverylist";
+import DeliverySearch from "./pages/Delivery/Courier/SearchDelivery";
 
 function Signin(){
-  localStorage.clear()
+  // localStorage.clear()
   return <Login />
 }
 
 function RegisterAndLogout()  {
-  localStorage.clear()
+  // localStorage.clear()
   return <Register />
 }
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/logout" element={<Logout />} /> {/* Redirects and clears localStorage */}     
         <Route path="/request-delivery" element={<RequestDelivery />} />
         <Route path="/deliverylist" element={< DeliveryList />} />
+        <Route path="/deliverysearch" element = {< DeliverySearch />} />
 
          </Routes>
     </BrowserRouter>

@@ -1,13 +1,28 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 // import Form from '../components/Form'
 import { useNavigate , Link} from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 import api from '../api';
+import { useSelector } from 'react-redux';
 
 
 
 
 const Register = () => {
+
+
+  const user = useSelector((state) => state.auth.user)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+        navigate('/')
+    }
+  },[user,navigate])
+
+
+
+
   const [formData, setFormData] = useState({
     firstname: '',
     lastname:'',
@@ -22,7 +37,6 @@ const Register = () => {
 
 
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
   const [err, setErr] = useState('');
 
 

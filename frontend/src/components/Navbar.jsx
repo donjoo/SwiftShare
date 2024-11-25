@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setAuthData } from '../redux/auth/authSlice';
 import Logout from './Logout';
 
-
+import { Link } from 'react-router-dom';
 
 function Navbar() {
 
@@ -14,15 +14,15 @@ function Navbar() {
   const navigate = useNavigate();
 
   
-  // useEffect(() => {
-  //   if (!user) {
-  //     const storedUserData = localStorage.getItem('user');
-  //     if (storedUserData) {
-  //       const parsedUserData = JSON.parse(storedUserData);
-  //       dispatch(setAuthData({ user: parsedUserData }));
-  //     } 
-  //   }
-  // }, [dispatch, navigate, user]);
+  useEffect(() => {
+    if (!user) {
+      const storedUserData = localStorage.getItem('user');
+      if (storedUserData) {
+        const parsedUserData = JSON.parse(storedUserData);
+        dispatch(setAuthData({ user: parsedUserData }));
+      } 
+    }
+  }, [dispatch, navigate, user]);
 
   return (
     
@@ -31,7 +31,7 @@ function Navbar() {
       <div className="flex justify-between items-center">
         <div className="text-2xl font-bold text-orange-500">CommunityGo</div>
         <div className="hidden md:flex space-x-6">
-          <a href="#" className="text-gray-600 hover:text-orange-500 transition duration-300">Home</a>
+          <NavLink to="/" className="text-gray-600 hover:text-orange-500 transition duration-300">Home</NavLink>
           <a href="#" className="text-gray-600 hover:text-orange-500 transition duration-300">How It Works</a>
           <a href="#" className="text-gray-600 hover:text-orange-500 transition duration-300">About Us</a>
           <a href="#" className="text-gray-600 hover:text-orange-500 transition duration-300">Contact</a>

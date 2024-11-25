@@ -16,15 +16,15 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      const storedUserData = localStorage.getItem('user');
-      if (storedUserData) {
-        const parsedUserData = JSON.parse(storedUserData);
-        dispatch(setAuthData({ user: parsedUserData }));
-      } 
-    }
-  }, [dispatch, navigate, user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     const storedUserData = localStorage.getItem('user');
+  //     if (storedUserData) {
+  //       const parsedUserData = JSON.parse(storedUserData);
+  //       dispatch(setAuthData({ user: parsedUserData }));
+  //     } 
+  //   }
+  // }, [dispatch, navigate, user]);
 
 
   return (

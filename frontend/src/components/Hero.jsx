@@ -99,7 +99,7 @@ const Hero = () => {
                 Request a Delivery
               </button>
               <button
-                onClick={() => handleChoice('/start-delivering')}
+                onClick={() => handleChoice('/deliverysearch')}
                 className="bg-gray-300 text-gray-800 font-bold py-3 px-8 w-full rounded-full transition duration-300 ease-in-out hover:bg-gray-400"
               >
                 Start Delivering
