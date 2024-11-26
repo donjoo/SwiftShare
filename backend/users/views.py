@@ -69,7 +69,7 @@ class LoginView(APIView):
         except User.DoesNotExist:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
         
-# #admin
+#admin
 # class AdminTokenObtainView(TokenObtainPairView):
 #     def post(self, request, *args, **kwargs):
 #         user = authenticate(email=request.data.get('email'), password=request.data.get('password'))

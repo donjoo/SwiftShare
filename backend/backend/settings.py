@@ -32,7 +32,20 @@ SECRET_KEY = 'django-insecure-6$b!p3q0w)z=tzk8=1y&b9w^slq90^0mm9#2xl87ze3$)_a-zd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+
+# Add localhost to allowed hosts
 ALLOWED_HOSTS = []
+
+# For Django versions < 4.0
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+# ]
+
+# # For Django versions >= 4.0
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://localhost:3000',
+# ]
 
 
 # Application definition

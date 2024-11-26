@@ -31,7 +31,7 @@ class Delivery(models.Model):
         ('PENDING', 'Pending'),
         ('PICKED_UP', 'Picked Up'),
         ('DELIVERED', 'Delivered'),
-        ('CANCELED', 'Canceled'),
+        ('CANCELED', 'Canceled'),   
     ]
 
     PACKAGE_SIZES = [

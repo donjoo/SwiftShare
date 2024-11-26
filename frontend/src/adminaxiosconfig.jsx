@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const adminAxiosInstance = axios.create({
-    baseURL: 'http://localhost:8000/api/'
+    baseURL: 'http://localhost:8000/admin/'
 });
 
 adminAxiosInstance.interceptors.request.use(

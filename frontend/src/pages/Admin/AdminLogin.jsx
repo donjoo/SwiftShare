@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setAuthData } from "./redux/auth/authSlice"
+import { setAuthData } from "../../redux/auth/authSlice"
 import adminAxiosInstance from "../../adminaxiosconfig"
-
+import { Link } from "react-router-dom"
 
 
 const AdminLogin = () => {
@@ -23,7 +23,7 @@ const AdminLogin = () => {
     
 
     useEffect(() => {
-        if (user& user.is_superadmin) {
+        if (user && user.is_superuser) {
             navigate('/admin/dashboard');
         }
     }, [user,navigate]);
@@ -33,14 +33,14 @@ const AdminLogin = () => {
     const handleAdminLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await adminAxiosInstance.post('/admin/token/',{email,password});
+            const response = await adminAxiosInstance.post('admin/token/',{email,password});
             localStorage.setItem('adminToken',response.data.admin_token);
             localStorage.setItem('adminData', JSON.stringify(response.data));
 
 
             dispatch(setAuthData(response.data));
 
-            navigate('/admin/dashboard',{replace:true});
+            navigate('/dashboard',{replace:true});
         } catch (error) {
             console.error('Admin login failed:',error)
             setError('Login failed.Please check your credentials.');
