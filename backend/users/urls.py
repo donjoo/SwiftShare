@@ -5,5 +5,54 @@ app_name='users'
 
 urlpatterns = [
     path('signup/', SignupView.as_view(), name='signup'),
-    path('login/',LoginView.as_view(), name='login'),    
-]
+    path('login/',LoginView.as_view(), name='login'),
+    
+    
+]    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

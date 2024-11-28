@@ -12,7 +12,6 @@ from users.serializers import UserSerializer
 from Delivery.models import Delivery
 from Delivery.serializers import DeliverySerializers
 
-
 User = get_user_model()
 
 class AdminTokenObtainView(TokenObtainPairView):
@@ -70,7 +69,7 @@ class UserList(APIView):
 
     def get(self,request):
     
-            users = User.objects.filter(is_superadmin=False)
+            users = User.objects.filter(is_superadmin=False,is_deleted = False)
             user_serializer = UserSerializer(users,many=True)
 
             return Response({
@@ -94,25 +93,59 @@ class DeliveryList(APIView):
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAdminUser])
-def toggle_user_status(request, userId):
-    try:
-        user = User.objects.get(id=userId)
-        user.is_active = not user.is_active  # Toggle the is_active status
-        user.save()
-        return Response(
-            {"success": True, "message": f"User {'blocked' if not user.is_active else 'unblocked'} successfully."},
-            status=status.HTTP_200_OK,
-        )
-    except User.DoesNotExist:
-        return Response(
-            {"success": False, "message": "User not found."},
-            status=status.HTTP_404_NOT_FOUND,
-        )
-    except Exception as e:
-        return Response(
-            {"success": False, "message": str(e)},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
+def toggle_user_status(request, user_id):
+    if request.method == 'POST':
+        # Your logic for toggling the user's status
+        try:
+            # Example: Retrieve user and toggle status
+            user = User.objects.get(pk=user_id)
+            user.is_active = not user.is_active
+            user.save()
+            return Response({'success': True, 'message': 'User status updated successfully.'})
+        except User.DoesNotExist:
+            return Response({'success': False, 'error': 'User not found.'}, status=404)
+        except Exception as e:
+            return Response(
+                    {"success": False, "message": str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR,)
+    return Response({'success': False, 'error': 'Invalid request method.'}, status=400)
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAdminUser])
+def delete_user(request,user_id):
+    if request.method == 'POST':
+        try:
+            user = User.objects.get(pk = user_id)
+            user.is_deleted = True
+            user.save()
+            return Response({'success': True , 'message': 'User status updated  successfully.'})
+        except User.DoesNotExist:
+            return Response({'success': False, 'error': "User not found."}, status = 404)
+        except Exception as e:
+            return Response({"success":False,'message':str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return Response({'success':False,'error':'Invalid resquest method.'},status=400)
+    
+
+# @api_view(['POST'])
+# @permission_classes([permissions.IsAdminUser])
+# def toggle_user_status(request, user_id):
+#     try:
+#         user = User.objects.get(id=user_id)
+#         user.is_active = not user.is_active  # Toggle the is_active status
+#         user.save()
+#         return Response(
+#             {"success": True, "message": f"User {'blocked' if not user.is_active else 'unblocked'} successfully."},
+#             status=status.HTTP_200_OK,
+#         )
+#     except User.DoesNotExist:
+#         return Response(
+#             {"success": False, "message": "User not found."},
+#             status=status.HTTP_404_NOT_FOUND,
+#         )
+#     except Exception as e:
+#         return Response(
+#             {"success": False, "message": str(e)},
+#             status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+#         )
 
 
 

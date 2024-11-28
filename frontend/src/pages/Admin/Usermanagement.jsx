@@ -4,8 +4,10 @@ import { useState } from 'react'
 
 import { PlusIcon, PencilIcon, TrashIcon } from 'lucide-react'
 import adminAxiosInstance from '../../adminaxiosconfig'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import AdminNavbar from '../../components/AdminComponents/AdminNavbar'
+import { useNavigate } from 'react-router-dom'
+import { setAuthData } from '../../redux/auth/authSlice';
 
 
 
@@ -18,8 +20,20 @@ function Usermanagement() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [error,setError]    = useState(null);
     const user = useSelector((state) => state.auth.user);
-
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+ 
+    useEffect(() => {
+      if (!user) {
+        const storedUserData = localStorage.getItem('adminData');
+        if (storedUserData) {
+          const parsedAdminData = JSON.parse(storedUserData);
+          if (parsedAdminData?.user) {
+            dispatch(setAuthData({ user: parsedAdminData.user})); // Dispatch user data to the Redux store
+          }
+        }
+      }
+    }, [dispatch, navigate, user]);
 
 
     const fetchUserlist = async () => {
@@ -40,8 +54,9 @@ function Usermanagement() {
     const toggleUserStatus = async (userId, currentStatus) => {
         try {
             const newStatus = currentStatus ? 'block' : 'unblock';
-            const response = await adminAxiosInstance.post(`/users/${userId}/toggle-status/`);
-            
+            // const response = await adminAxiosInstance.post(`admin/${userId}/toggle_status/`);
+            const response = await adminAxiosInstance.post(`${userId}/toggle_status/`);
+
             if (response.data.success) {
                 alert(`User successfully ${newStatus}ed!`);
                 fetchUserlist();
@@ -54,6 +69,22 @@ function Usermanagement() {
         }
     };
     
+    
+    const deleteUser = async (userId) =>{
+      try {
+        const response = await adminAxiosInstance.post(`${userId}/delete_user/`);
+
+        if (response.data.success) {
+          alert(`User successfully deleted!`);
+          fetchUserlist();
+        } else {
+          alert(`Failed to delete user.`);
+        }
+      } catch (error) {
+        console.error(`Failed to delete user of user id ${userId}:`,error);
+        alert('An error occured while updataing user status');
+      }
+    };
 
     
     useEffect(() => {
@@ -67,9 +98,7 @@ function Usermanagement() {
       setNewUser({ name: '', email: '', role: '' })
     }
   
-    const deleteUser = (id) => {
-      users.filter(user => user.id !== id)
-    }
+   
 
 
     
