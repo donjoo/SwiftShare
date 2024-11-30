@@ -14,7 +14,7 @@ const DeliveryList = () => {
     const fetchDeliveries = async () => {
      
       try {
-        const response = await api.get('/api/deliverylist/', {
+        const response = await api.get('deliverylist/', {
           params: { user: user.id }, // Pass user ID if available
         });
 

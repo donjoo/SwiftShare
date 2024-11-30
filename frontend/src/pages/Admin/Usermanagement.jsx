@@ -6,7 +6,7 @@ import { PlusIcon, PencilIcon, TrashIcon } from 'lucide-react'
 import adminAxiosInstance from '../../adminaxiosconfig'
 import { useDispatch, useSelector } from 'react-redux'
 import AdminNavbar from '../../components/AdminComponents/AdminNavbar'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { setAuthData } from '../../redux/auth/authSlice';
 
 
@@ -69,7 +69,7 @@ function Usermanagement() {
         }
     };
     
-    
+
     const deleteUser = async (userId) =>{
       try {
         const response = await adminAxiosInstance.post(`${userId}/delete_user/`);
@@ -164,11 +164,15 @@ function Usermanagement() {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {users.map((user) => (
-            <tr key={user.id}>
-              <td className="px-6 py-4 whitespace-nowrap">{user.first_name}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
+            <tr key={user.id} >
+               {/* <Link to={`/user/${user.id}`} className="text-blue-600 hover:underline"> */}
+                        
+              <td  onClick={() => navigate(`/user/${user.id}`)} className="px-6 py-4 whitespace-nowrap">{user.first_name}</td>
+              <td  onClick={() => navigate(`/user/${user.id}`)} className="px-6 py-4 whitespace-nowrap">{user.email}</td>
               <td className="px-6 py-4 whitespace-nowrap">{user.username}</td>
+              {/* </Link> */}
               <td className="px-6 py-4 whitespace-nowrap">
+             
                 <div className="flex space-x-2">
                   <button
                     onClick={() => openEditModal(user)}

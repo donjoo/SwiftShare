@@ -12,6 +12,9 @@ function Navbar() {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+
+
 
   
   useEffect(() => {
@@ -37,7 +40,7 @@ function Navbar() {
           <a href="#" className="text-gray-600 hover:text-orange-500 transition duration-300">Contact</a>
           { user ? (
             <>
-          <NavLink to='#' className="text-orange-500 hover:underline">{user.username}</NavLink>
+          <NavLink to='/profile' className="text-orange-500 hover:underline">{user.username}</NavLink>
           <NavLink to="/logout" className="text-blue-500 hover:underline">
                LogOut
           </NavLink>

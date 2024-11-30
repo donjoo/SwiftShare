@@ -123,6 +123,26 @@ def delete_user(request,user_id):
         except Exception as e:
             return Response({"success":False,'message':str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response({'success':False,'error':'Invalid resquest method.'},status=400)
+
+
+
+
+class user_detail(APIView):
+    def get(self,request,user_id):
+        try:
+            user = User.objects.get(id=user_id)
+            deliveries = Delivery.objects.filter(user=user)
+            print(deliveries)
+            serializer = UserSerializer(user)
+            deliveryserializer = DeliverySerializers(deliveries,many=True)
+            data = {
+                'user':serializer.data,
+                'deliveries':deliveryserializer.data,
+            }
+            return Response(data)
+        except User.DoesNotExist:
+            return Response({'error':"user not found"},status=status.HTTP_404_NOT_FOUND)
+
     
 
 # @api_view(['POST'])

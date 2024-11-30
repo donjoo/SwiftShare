@@ -38,7 +38,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/api/login/', {email, password});
+      const response = await api.post('login/', {email, password});
       const {user,token} = response.data;
       localStorage.setItem('user',JSON.stringify(user));
       localStorage.setItem('ACCESS_TOKEN',token);

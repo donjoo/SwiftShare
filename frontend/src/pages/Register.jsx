@@ -114,7 +114,7 @@ const Register = () => {
       if (validate()) {
         try {
           console.log(formData)
-          const response = await api.post('/api/signup/',{
+          const response = await api.post('signup/',{
             firstname: formData.firstname,
             lastname: formData.lastname,
             username: formData.username,

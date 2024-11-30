@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import { useSelector } from 'react-redux';
@@ -9,31 +9,59 @@ const DeliverySearch = () => {
   const [deliveries, setDeliveries] = useState([]);
   const [error, setError] = useState(null); // Add an error state
   const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchDeliveries = async () => {
+      if (!user) {
+        setError('User is not authenticated.');
+        return; // Stop fetching if no user is available
+      }
+
       try {
-        const response = await api.get('/api/deliverysearch/');
+        const response = await api.get('deliverysearch/');
 
         // Check if the response contains data
-        if (response.data) {
+        if (response.data && response.data.length > 0) {
           setDeliveries(response.data);
         } else {
-          setError('No deliveries found.');
+          setError('No available deliveries.');
         }
       } catch (error) {
         console.error('Error fetching deliveries:', error);
-        setError('Failed to fetch deliveries.');
       }
     };
 
-    fetchDeliveries(); // Only fetch if user exists and is authenticated
+    fetchDeliveries(); // Fetch deliveries when user exists
   }, [user]);
 
-  const handleAccept = (deliveryId) => {
-    // Logic to handle acceptance (could be an API call or state change)
-    console.log('Accepted delivery with ID:', deliveryId);
-  };
+
+  // const handleAccept = (deliveryId) => {
+  //   const 
+  //   console.log('Accepted delivery with ID:', deliveryId);
+  // };
+
+    const acceptdelivery = async (deliveryId) => {
+      if (!user) {
+        setError('User is not authenticated.');
+        return; // Stop fetching if no user is available
+      }
+
+      try {
+        const response = await api.post(`${deliveryId}/acceptdelivery/`);
+        if (response.status === 200){
+          navigate(`/deliverydetail/${deliveryId}`);        }
+      }catch (error){
+        console.log('Error accepting delivery', error)
+      }
+    }
+
+
+
+
+
+
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -70,7 +98,7 @@ const DeliverySearch = () => {
                 <td className="py-3 px-6">{delivery.package_size}</td>
                 <td className="py-3 px-6">
                   <button
-                    onClick={() => handleAccept(delivery.id)}
+                    onClick={() => acceptdelivery(delivery.id)}
                     className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
                   >
                     Accept

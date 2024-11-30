@@ -11,7 +11,21 @@ function AdminNavbar() {
     const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
+    const handleLogout = () => {
+      console.log('loggedout')
+      localStorage.removeItem('adminToken');
+      console.log('loggedodqwefewfut')
+
+      localStorage.removeItem('adminData');
+      console.log('loggedoutefg4egf')
+
+      navigate('/login');
+
+  };
+
+
+
     useEffect(() => {
       if (!user) {
         const storedUserData = localStorage.getItem('adminData');
@@ -37,7 +51,7 @@ function AdminNavbar() {
           { user ? (
             <>
           <NavLink to='#' className="text-orange-500 hover:underline">{user.username}</NavLink>
-          <NavLink to="/logout" className="text-blue-500 hover:underline">
+          <NavLink to='/login' className="text-blue-500 hover:underline">
                LogOut
           </NavLink>
 

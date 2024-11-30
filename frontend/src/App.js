@@ -12,6 +12,10 @@ import AdminLogin from './pages/Admin/AdminLogin'
 import Dashboard from "./pages/Admin/Dashboard";
 import Usermanagement from "./pages/Admin/Usermanagement";
 import DeliveryManagement from "./pages/Admin/DeliveryManagement";
+import Profile from "./pages/User/Profile";
+import UserDetail from "./pages/Admin/user/Edituser";
+import DeliveryDetails from "./pages/Delivery/Courier/DeliveryDetails";
+
 
 function Signin(){
   // localStorage.clear()
@@ -49,6 +53,9 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/usermanagement' element={<Usermanagement />} />
         <Route path='/deliverymanagement' element={< DeliveryManagement/>} />
+        <Route path='/profile' element={< Profile />} />
+        <Route path ='/user/:id' element={< UserDetail />} />
+        <Route path='/deliverydetail/:deliveryId' element = {< DeliveryDetails />} />
  
          </Routes>
     </BrowserRouter>
