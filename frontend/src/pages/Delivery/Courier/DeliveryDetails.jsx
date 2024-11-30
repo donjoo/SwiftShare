@@ -95,11 +95,13 @@ function DeliveryDetails() {
 
               <div className="mt-10">
                 <h2 className="text-lg font-semibold text-gray-600">Courier Details</h2>
-                {courier && (
+                {courier ? (
                   <div>
                     <p><strong>Courier:</strong> {courier.username}</p>
                     <p><strong>Phone Number:</strong> {courier.phone_number}</p>
                   </div>
+                ):(
+                  <p><span className="text-orange-500">waiting for a courier to accept your delivery request.</span></p>
                 )}
 
                 {delivery.picked_upat && (

@@ -45,6 +45,8 @@ class Delivery(models.Model):
     package_size = models.CharField(max_length=12, choices=PACKAGE_SIZES)
     courier     = models.ForeignKey(Courier, on_delete=models.SET_NULL, null=True,blank=True, related_name='assigned_deliveries')
     status = models.CharField(max_length=12, choices=DELIVERY_STATUS, default='PENDING')
+    pickup_otp = models.CharField(max_length=4,null=True, blank=True)
+    dropoff_otp = models.CharField(max_length=4,null=True,blank=True)
     delivered_at = models.DateTimeField(null=True,blank=True)
     picked_upat = models.DateTimeField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

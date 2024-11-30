@@ -9,6 +9,10 @@ from django.shortcuts import get_object_or_404
 from .models import Delivery, Courier
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
+import secrets
+import string
+from  django.core.exceptions  import ObjectDoesNotExist
+
 
 User = get_user_model()
 
@@ -20,7 +24,8 @@ class RequestDelivery(APIView):
         if serializer.is_valid():
             print('delivery valid')
             data = serializer.save()
-            return Response(status=status.HTTP_200_OK)
+            delivery_id = data.id
+            return Response({"delivery_id":delivery_id},status=status.HTTP_200_OK)
         print(serializer.errors)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
@@ -47,7 +52,6 @@ class DeliveryList(APIView):
 
 class DeliverySearch(APIView):
     def get(self,request):
-        print('heloooooooooooooooooooooooo')
         deliveries = Delivery.objects.filter(status = 'PENDING').exclude(user=request.user)
         if deliveries.exists():
             serializer = DeliverySerializers(deliveries, many=True)
@@ -57,8 +61,9 @@ class DeliverySearch(APIView):
 
 
     
-
-
+def generate_otp():
+    otp = ''.join(secrets.choice(string.digits) for _ in range(4))
+    return otp
 
 class AcceptDelivery(APIView):
     permission_classes = [IsAuthenticated]
@@ -86,14 +91,17 @@ class DeliveryDetailView(APIView):
             delivery = get_object_or_404(Delivery.objects.select_related('courier'), id=delivery_id)
             print(delivery,'jfjjnjnj')
             serializer = DeliverySerializers(delivery)
+
             data =  {
                 "delivery":serializer.data,
-                "courier": {
-                "id": delivery.courier.id,
-                "username": delivery.courier.user.username,
-                "phone_number":delivery.courier.user.phone_number,
-            },
             }
+            if delivery.courier:
+                data["courier"] = {
+                        "id": delivery.courier.id,
+                        "username": delivery.courier.user.username,
+                        "phone_number": delivery.courier.user.phone_number,
+                    }
+         
             print(data)
             return Response(data, status=status.HTTP_200_OK)
         except Delivery.DoesNotExist:

@@ -4,13 +4,16 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import api from '../../api'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function DeliveryPage() {
 
   const user = useSelector((state) => state.auth.user);
+  const [delivery_id,setDelivery_id] = useState();
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
 
   const [formData, setFormData] = useState({
@@ -160,9 +163,10 @@ export default function DeliveryPage() {
   
 
     try {
-      const response = await api.post('/api/request_delivery/', payload);
+      const response = await api.post('request_delivery/', payload);
 
       if (response.status >= 200 && response.status < 300) {
+        delivery_id = response.data.delivery_id
         alert('Delivery request submitted successfully!');
         setFormData({
           from_address: '',
@@ -176,6 +180,7 @@ export default function DeliveryPage() {
           package_size: 'SM',
           details: '',
         });
+        navigate(`/deliverydetail/${delivery_id}`)
       } else {
         alert('Failed to submit delivery request. Please try again.');
       }
